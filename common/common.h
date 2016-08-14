@@ -47,13 +47,26 @@ do \
 while (false)
 
 
+#define opencl_check_error_no_throw(err_code, function) \
+do \
+{ \
+        if ((err_code)) \
+        { \
+                std::stringstream msg; \
+                msg << "[" << __FILE__ << ":" << __LINE__ << "] " << #function \
+                    << " returns " << opencl_error_to_string((err_code)); \
+        } \
+} \
+while (false)
+
+
 #define check(condition) \
 do \
 { \
         if (!(condition)) \
         { \
                 std::stringstream msg; \
-                msg << "[" << __FILE__ << ":" << __LINE__ + "] '" << #condition << "' is not met"; \
+                msg << "[" << __FILE__ << ":" << __LINE__ << "] '" << #condition << "' is not met"; \
                 throw std::runtime_error(msg.str()); \
         } \
 } \
@@ -94,7 +107,7 @@ class type##_wrapper \
                         if (_entity) \
                         { \
                                 cl_int err = release_function(_entity); \
-                                opencl_check_error(err, release_function); \
+                                opencl_check_error_no_throw(err, release_function); \
                         } \
                 } \
 \

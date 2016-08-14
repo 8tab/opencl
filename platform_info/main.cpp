@@ -249,7 +249,7 @@ void print_device_string(cl_device_id device_id, cl_device_info param_name)
         error = clGetDeviceInfo(device_id, param_name, param_size, param_value, nullptr);
         opencl_check_error(error, clGetDeviceInfo);
 
-        std::map<cl_device_info, const char*> param_name_map;
+        std::map<cl_device_info, std::string> param_name_map;
         param_name_map[CL_DEVICE_NAME] = "CL_DEVICE_NAME";
         param_name_map[CL_DEVICE_VENDOR] = "CL_DEVICE_VENDOR";
         param_name_map[CL_DRIVER_VERSION] = "CL_DRIVER_VERSION";
